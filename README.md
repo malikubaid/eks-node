@@ -171,12 +171,23 @@ Create a Deployment on Your EKS Cluster
     Download the course files:
 
     git clone https://github.com/malikubaid/eks-node.git
-
-    Change directory:
+    
+    Create docker image and push to ECR:
 
     cd eks-node
+    
+    docker build -t nodeapp .
+
+    docker tag nodeapp:latest REPOID.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
+
+    docker push REPOID.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
+    
+    Change directory:
+
 
     Take a look at the service manifest file:
+    
+    cd k8s
 
     cat service.yml
 
@@ -194,7 +205,8 @@ Create a Deployment on Your EKS Cluster
 
     Copy the external DNS hostname of the load balancer, and paste it into a text file, as we'll need it in a minute.
 
-    Create the deployment:
+
+    Before deplyment update the image ECR path and then create the deployment:
 
     kubectl apply -f ./deployment.yaml
 
